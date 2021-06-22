@@ -1,0 +1,126 @@
+﻿@model Mailer.Models.Mail
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+    <script type="text/javascript" src="~/js/HomeScript.js"></script>
+</head>
+<body>
+    <div class="tableDiv">
+        <table>
+            <tr class="Rows">
+                <td class="Parts"><label>@Model.Name</label></td>
+                <td><input type="text" onchange="OntextChange()" id="Name"</td>
+            </tr>
+            <tr>
+                <td class="Parts"><label>@Model.From</label></td>
+                <td><input type="text" onchange="OntextChange()" id="Email" /></td>
+            </tr>
+
+            <tr>
+                <td class="Parts"><label>@Model.Subject</label></td>
+                <td><input type="text" onchange="OntextChange()" id="Subject"</td>
+            </tr>
+            <tr>
+                <td class="Parts"><label>@Model.Body</label></td>
+                <td><textarea class="textarea" onchange="OntextChange()" id="Details"></textarea></td>
+            </tr>
+            <tr>
+                <td class="Parts"></td>
+                <td><button class="Submitbutton" onclick="OnSubmit()" id="Submit" disabled=true>@Model.To</button></td>
+            </tr>
+    </div>
+    <style>
+        .Submitbutton {
+            color: white;
+            background-color: black;
+            height: 20%;
+        }
+
+        .tableDiv {
+            position: absolute;
+            left: 35%;
+            top: 35%;
+            background-color: white;
+            border-style: double;
+            border-width: 5% 5% 5% 5%;
+            border-radius: 5px;
+            height: 30%;
+        }
+
+        .Parts {
+            color: black;
+        }
+        .textarea {
+            resize: none;
+            color: black;
+        }
+
+        .PartsInput {
+            width: 70%;
+        }
+
+        .Rows {
+            height: 20%;
+        }
+    </style>
+    <script type="text/javascript">
+        function OntextChange() {
+            var Name = document.getElementById("Name").value;
+            var Subject = document.getElementById("Subject").value;
+            var Email = document.getElementById("Email").value;
+
+            var Details = document.getElementById("Details").value;
+            if (Name.Length != 0 && Subject.Length != 0 && Details.Length != 0 && Email.Length != 0) {
+                document.getElementById("Submit").disabled = false;
+            }
+            else {
+                document.getElementById("Submit").disabled = true;
+            }
+        }
+        function OnSubmit() {
+            var Name = document.getElementById("Name").value;
+            var Subject = document.getElementById("Subject").value;
+            var Email = document.getElementById("Email").value;
+
+            var Details = document.getElementById("Details").value;
+
+            if (CheckEmail(Email)) {
+                var data = new FormData();
+                data.append("Name", Name);
+                data.append("Subject", Subject);
+                data.append("From", "mohammad.ghulmi@gmail.com");
+                data.append("To", Email)
+                data.append("Password", "");
+                data.append("Body", Details);
+
+                const XHR = new XMLHttpRequest();
+                XHR.open("POST", "http://localhost:53721/Mail")
+                XHR.send(data);
+                XHR.onreadystatechange = function () { // Call a function when the state changes.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        // Request finished. Do processing here.
+                        alert("sent successfully")
+                    }
+                }
+
+
+
+            }
+            else
+            {
+                alert("Enter a valid email!");
+            }
+
+        }
+    </script>
+</body>
+
+</html>

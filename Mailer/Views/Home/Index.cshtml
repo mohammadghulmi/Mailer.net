@@ -1,0 +1,57 @@
+﻿
+
+<head>
+    <script type="text/javascript" src="~/js/HomeScript.js"></script>
+</head>
+<body>
+    <div class="tableDiv">
+        <select id="language">
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+        </select>
+        <button onclick="Getview()">Continue</button>
+</div>
+    <style>
+        .Submitbutton {
+            color: white;
+            background-color: black;
+            height:20%;
+            
+        }
+
+        .tableDiv {
+            position: absolute;
+            left: 35%;
+            top: 35%;
+            background-color: white;
+            border-style: double;
+            border-width:5% 5% 5% 5%;
+            border-radius: 5px;
+            
+            height: 30%;
+        }
+
+        .Parts {
+            color:black;
+           
+            
+
+
+        }
+        .PartsInput {
+            width: 70%;
+            
+        }
+        .Rows{
+            height:20%;
+
+        }
+
+    </style>
+    <script type="text/javascript">
+        function Getview() {
+            var Lang = document.getElementById("language").value
+            window.location.href = "http://localhost:53721/Home/Views?Lang=" + Lang;
+        }
+    </script>
+</body>
